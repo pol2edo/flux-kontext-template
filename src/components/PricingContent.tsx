@@ -20,6 +20,7 @@ import {
   Loader2
 } from "lucide-react"
 import { pricing, common } from "@/lib/content"
+import { replaceSiteTokens } from "@/lib/site-config"
 
 interface PricingPlan {
   id: string
@@ -153,7 +154,7 @@ function PricingMainContent() {
 
           {/* Plan Type Toggle */}
           <div className="flex justify-center mb-8">
-            <div className="flex bg-muted/20 rounded-lg p-1">
+            <div className="app-floating-panel flex rounded-xl p-1">
               <button
                 onClick={() => setActiveTab("subscription")}
                 className={`px-6 py-2 rounded-md text-sm font-medium transition-all duration-200 hover:scale-105 active:scale-95 ${
@@ -181,15 +182,15 @@ function PricingMainContent() {
           {activeTab === "subscription" && (
             <div className="flex items-center justify-center mb-8">
               <div className="flex items-center gap-3">
-                <span className={`text-sm font-medium transition-all duration-300 ${!isYearly ? 'text-purple-600 dark:text-purple-400 font-semibold' : 'text-gray-600 dark:text-gray-400'}`}>
+                <span className={`text-sm font-medium transition-all duration-300 ${!isYearly ? 'text-primary font-semibold' : 'text-muted-foreground'}`}>
                   {pricing.billing.monthly}
                 </span>
                 <button
                   onClick={() => setIsYearly(!isYearly)}
                   className={`relative inline-flex h-6 w-12 items-center rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 shadow-sm hover:shadow-md transform hover:scale-105 active:scale-95 ${
                     isYearly 
-                      ? 'bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 focus:ring-indigo-300 dark:focus:ring-indigo-500' 
-                      : 'bg-gradient-to-r from-slate-300 via-slate-350 to-slate-400 dark:from-slate-600 dark:via-slate-650 dark:to-slate-700 focus:ring-slate-300 dark:focus:ring-slate-500'
+                      ? 'bg-gradient-to-r from-primary via-accent to-primary focus:ring-primary/40' 
+                      : 'bg-gradient-to-r from-muted via-secondary to-muted-foreground/50 focus:ring-primary/20'
                   }`}
                 >
                   <span
@@ -198,11 +199,11 @@ function PricingMainContent() {
                     }`}
                   />
                 </button>
-                <span className={`text-sm font-medium transition-all duration-300 ${isYearly ? 'text-purple-600 dark:text-purple-400 font-semibold' : 'text-gray-600 dark:text-gray-400'}`}>
+                <span className={`text-sm font-medium transition-all duration-300 ${isYearly ? 'text-primary font-semibold' : 'text-muted-foreground'}`}>
                   {pricing.billing.yearly}
                 </span>
                 {isYearly && (
-                  <Badge variant="secondary" className="bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300 ml-2 animate-pulse">
+                  <Badge variant="outline" className="app-tint-badge app-tint-badge--success ml-2 animate-pulse">
                     {pricing.billing.savePercent}
                   </Badge>
                 )}
@@ -216,7 +217,7 @@ function PricingMainContent() {
               {pricingPlans.map((plan) => (
                 <div
                   key={plan.id}
-                  className={`relative bg-card border rounded-lg p-6 ${
+                  className={`app-surface-card rounded-2xl p-6 ${
                     plan.isPopular
                       ? 'border-primary shadow-lg shadow-primary/20'
                       : 'border-border hover:border-primary/50'
@@ -246,7 +247,7 @@ function PricingMainContent() {
                   <div className="space-y-3 mb-6">
                     {plan.features.map((feature, index) => (
                       <div key={`${plan.id}-feature-${index}`} className="flex items-center space-x-3">
-                        <Check className="h-4 w-4 text-green-500 flex-shrink-0" />
+                        <Check className="h-4 w-4 text-success flex-shrink-0" />
                         <span className="text-sm text-muted-foreground">{feature}</span>
                       </div>
                     ))}
@@ -292,7 +293,7 @@ function PricingMainContent() {
               {creditPacks.map((pack) => (
                 <div
                   key={pack.id}
-                  className={`relative bg-card border rounded-lg p-6 ${
+                  className={`app-surface-card rounded-2xl p-6 ${
                     pack.isPopular
                       ? 'border-primary shadow-lg shadow-primary/20'
                       : 'border-border hover:border-primary/50'
@@ -307,7 +308,7 @@ function PricingMainContent() {
                   )}
 
                   <div className="text-center mb-6">
-                    <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <div className="app-icon-surface mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full">
                       <CreditCard className="w-8 h-8 text-primary" />
                     </div>
                     <h3 className="text-xl font-bold text-foreground mb-2">{pack.name}</h3>
@@ -323,7 +324,7 @@ function PricingMainContent() {
                   <div className="space-y-3 mb-6">
                     {pack.features.map((feature, index) => (
                       <div key={`${pack.id}-feature-${index}`} className="flex items-center space-x-3">
-                        <Check className="h-4 w-4 text-green-500 flex-shrink-0" />
+                        <Check className="h-4 w-4 text-success flex-shrink-0" />
                         <span className="text-sm text-muted-foreground">{feature}</span>
                       </div>
                     ))}
@@ -360,12 +361,12 @@ function PricingMainContent() {
             </h2>
             <div className="space-y-6">
               {pricingFAQs.map((faq, index) => (
-                <div key={index} className="bg-card border border-border rounded-lg p-6">
+                <div key={index} className="app-surface-card rounded-2xl p-6">
                   <h3 className="text-lg font-semibold text-foreground mb-3">
                     {faq.question}
                   </h3>
                   <p className="text-muted-foreground">
-                    {faq.answer}
+                    {replaceSiteTokens(faq.answer)}
                   </p>
                 </div>
               ))}

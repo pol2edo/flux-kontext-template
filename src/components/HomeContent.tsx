@@ -11,6 +11,7 @@ import { FAQ } from "@/components/FAQ"
 import { Footer } from "@/components/Footer"
 import { OrganizationSchema, WebSiteSchema, SoftwareApplicationSchema } from "@/components/StructuredData"
 import { home, common, seo } from "@/lib/content"
+import { siteConfig } from "@/lib/site-config"
 
 export function HomeContent() {
   return (
@@ -33,7 +34,7 @@ export function HomeContent() {
             "@type": "WebApplication",
             "name": "Flux Kontext AI",
             "description": seo.meta.description,
-            "url": "https://fluxkontext.space",
+            "url": siteConfig.siteUrl,
             "applicationCategory": "ImageEditingApplication",
             "operatingSystem": "Web Browser",
             "offers": {
@@ -55,7 +56,7 @@ export function HomeContent() {
         <div className="container mx-auto max-w-5xl text-center">
           <div className="hero-gradient absolute inset-0 pointer-events-none" />
           <div className="relative z-10">
-            <div className="inline-block px-4 py-2 bg-primary/10 border border-primary/20 rounded-full text-primary text-sm mb-6">
+            <div className="app-tint-badge mb-6 inline-block rounded-full px-4 py-2 text-sm">
               {home.hero.badge}
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 leading-tight">
@@ -80,7 +81,7 @@ export function HomeContent() {
                 <Button 
                   variant="outline" 
                   size="lg" 
-                  className="hover:scale-105 active:scale-95 transition-all duration-200 px-6 md:px-8 py-3 md:py-4 text-base md:text-lg"
+                  className="border-primary/20 bg-background/60 px-6 py-3 text-base backdrop-blur-sm transition-all duration-200 hover:scale-105 active:scale-95 md:px-8 md:py-4 md:text-lg"
                 >
                   {common.buttons.viewPricing}
                 </Button>
